@@ -9,7 +9,7 @@ Reusable skills for skill-compatible AI coding tools.
 Install every skill in this repository:
 
 ```bash
-npx -y skills add wendyliga/skills --all
+npx skills add wendyliga/skills
 ```
 
 Restart your AI coding tool after installation so new skills are loaded.
@@ -18,7 +18,7 @@ Restart your AI coding tool after installation so new skills are loaded.
 
 | Skill | Explanation | Install command |
 | --- | --- | --- |
-| `xcode` | Guide for using Xcode MCP tools to inspect and drive Xcode workspaces, schemes, destinations, builds, tests, SwiftUI previews, runtime logs, debugger commands, device interaction, project configuration, Apple documentation, crash reports, and performance diagnostics. | `npx -y skills add wendyliga/skills --skill xcode` |
+| `xcode` | Guide for using Xcode MCP tools to inspect and drive Xcode workspaces, schemes, destinations, builds, tests, SwiftUI previews, runtime logs, debugger commands, device interaction, project configuration, Apple documentation, crash reports, and performance diagnostics. | `npx skills add wendyliga/skills --skill xcode` |
 
 ## List Skills
 
