@@ -34,7 +34,9 @@ Invoke this skill when the task needs Xcode MCP to inspect, change, run, or veri
 
 ## If Xcode MCP Is Not Available
 
-If this skill is invoked but no `mcp__xcode` tools are available, install or register the Xcode MCP server first. After installation, restart or reload the agent session so the MCP tool list refreshes.
+If this skill is invoked but no `mcp__xcode` tools are available, first check whether the server is already registered (e.g. `claude mcp list` or `codex mcp list`). A server can show as connected while still exposing zero tools — that happens when Xcode itself is not open or has no workspace loaded, per Prerequisites above. In that case, ask the user to open Xcode with the target project/workspace rather than reinstalling the MCP server.
+
+Only install or register the Xcode MCP server if it is missing entirely. After installation, restart or reload the agent session so the MCP tool list refreshes.
 
 - Codex:
   ```bash
