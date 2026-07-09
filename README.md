@@ -1,4 +1,4 @@
-# Wendy Liga Skills
+# Skills
 
 Reusable skills for skill-compatible AI coding tools.
 
