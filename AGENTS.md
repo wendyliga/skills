@@ -29,7 +29,7 @@ Use two-space indentation in YAML. Name skill directories with lowercase kebab-c
 
 There is no automated test suite in this repository. Validate changes by checking Markdown readability, YAML syntax, and install visibility.
 
-For changed skills, run `npx -y skills add wendyliga/skills --list` when network access is available, then install the touched skill with `--skill <name>` to confirm packaging works. The `/validate-skill` project skill automates this.
+For changed skills, run `npx -y skills add wendyliga/skills --list` when network access is available, then install the touched skill with `--skill <name>` to confirm packaging works.
 
 ## Commit & Pull Request Guidelines
 
