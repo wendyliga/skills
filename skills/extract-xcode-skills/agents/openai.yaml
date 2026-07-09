@@ -1,0 +1,4 @@
+interface:
+  display_name: "Extract Xcode Skills"
+  short_description: "Extract Xcode 27's built-in chat skills into external agent skill dirs"
+  default_prompt: "Use $extract-xcode-skills to pull Xcode 27's built-in agentic chat skills out of Xcode.app and install them as SKILL.md packages for this agent."
