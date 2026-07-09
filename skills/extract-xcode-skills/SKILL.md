@@ -1,15 +1,20 @@
 ---
 name: extract-xcode-skills
-description: "Extract Xcode 27's built-in agentic chat skills (from IDEIntelligenceChat.framework) into standalone SKILL.md packages usable by external agents like Claude Code or Codex. Use when the user wants to pull, port, sync, or mirror Xcode's native AI skills (e.g. swiftui-specialist, uikit-app-modernization) out of Xcode.app and into another agent's skill directory."
+description: "Extract Xcode 27's built-in agentic skills (spread across IDEIntelligenceChat.framework and the local Xcode assistant cache) into standalone SKILL.md packages usable by external agents like Claude Code or Codex. Use when the user wants to pull, port, sync, or mirror Xcode's native AI skills (e.g. swiftui-specialist, uikit-app-modernization, accessibility-voiceover-specialist) out of Xcode.app and into another agent's skill directory."
 ---
 
 # Extract Xcode Skills
 
 ## Overview
 
-Xcode 27 ships built-in agentic chat skills inside `IDEIntelligenceChat.framework`. Each skill's `SKILL.md` body is an `.idechatprompttemplate` file and its `references/*.md` files are `*-ref-*.md.packaged` files — both are plain UTF-8 markdown despite the extensions, so extraction is just discovery + copy + rename, no decoding required.
+Xcode 27's built-in agentic skills are spread across two different mechanisms — a given skill lives in exactly one:
 
-This skill extracts those built-in skills out of Xcode.app and installs them as SKILL.md packages usable by external agents (Claude Code, Codex, etc.), using [scripts/extract-xcode-skill.sh](scripts/extract-xcode-skill.sh).
+- **A. `IDEIntelligenceChat.framework/.../Resources/`** — flat files: `<skill>.idechatprompttemplate` (the `SKILL.md` body) + `<skill>-ref-*.md.packaged` (the `references/*.md` files, prefixed with the skill name). e.g. `swiftui-specialist`, `swiftui-whats-new-27`, `uikit-app-modernization`, `audit-xcode-security-settings`, `adopt-c-bounds-safety`.
+- **B. Not statically bundled in Xcode.app at all.** Staged at runtime by the `IDEIntelligenceAgents` daemon into a per-build-number temp dir, and mirrored into a persistent local cache once used: `~/Library/Developer/Xcode/CodingAssistant/codex/skills/__xcode/<skill>/` — already plain `SKILL.md` + `references/*.md`, just copy as-is. e.g. `accessibility-dynamic-type-specialist`, `accessibility-voiceover-specialist`, `device-interaction`, `modernize-tests`, and also `translation`/`translation-coordinator` if they've been cached locally. This source only exists locally after Xcode's assistant has been used at least once — if a skill is missing from here, open a chat in Xcode, reference that skill by name, then retry.
+
+Both are plain UTF-8 markdown despite the `.packaged`/`.idechatprompttemplate` extensions — extraction is discovery + copy + rename, no decoding required. [scripts/extract-xcode-skill.sh](scripts/extract-xcode-skill.sh) tries A, then B for each skill name and reports which source it used.
+
+**Known limitation:** `translation-coordinator` ships with no YAML frontmatter (`name`/`description`) and its body calls Xcode-native tools (`LocalizationPlanner`, `StringCatalogRead`) that don't exist outside Xcode. It extracts, but it won't register as a usable skill for an external agent and isn't functional there. Flag this to the user rather than fabricating frontmatter or rewriting the tool calls.
 
 ## When To Invoke
 
