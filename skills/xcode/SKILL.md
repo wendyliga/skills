@@ -7,7 +7,7 @@ description: "Information and usage guide for Xcode MCP. Use when an agent needs
 
 ## Overview
 
-This skill is an information and usage guide for the visible `mcp__xcode` interface. Xcode MCP talks to an open Xcode workspace tab and can inspect or drive actions that depend on workspace state, project navigator membership, active scheme, run destination, previews, builds, tests, app runtime, or Apple service data.
+This skill is an information and usage guide for the Xcode MCP server. Xcode MCP talks to an open Xcode workspace tab and can inspect or drive actions that depend on workspace state, project navigator membership, active scheme, run destination, previews, builds, tests, app runtime, or Apple service data.
 
 ## When To Invoke
 
@@ -34,7 +34,7 @@ Invoke this skill when the task needs Xcode MCP to inspect, change, run, or veri
 
 ## If Xcode MCP Is Not Available
 
-If this skill is invoked but no `mcp__xcode` tools are available, first check whether the server is already registered (e.g. `claude mcp list` or `codex mcp list`). A server can show as connected while still exposing zero tools — that happens when Xcode itself is not open or has no workspace loaded, per Prerequisites above. In that case, ask the user to open Xcode with the target project/workspace rather than reinstalling the MCP server.
+If this skill is invoked but no Xcode MCP tools are available, first check whether the server is already registered (e.g. `claude mcp list` or `codex mcp list`). A server can show as connected while still exposing zero tools — that happens when Xcode itself is not open or has no workspace loaded, per Prerequisites above. In that case, ask the user to open Xcode with the target project/workspace rather than reinstalling the MCP server.
 
 Only install or register the Xcode MCP server if it is missing entirely. After installation, restart or reload the agent session so the MCP tool list refreshes.
 
