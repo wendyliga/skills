@@ -28,7 +28,7 @@ Invoke this skill when the task needs Xcode MCP to inspect, change, run, or veri
 - Require Xcode to be open first, with the target project or workspace loaded.
 - Require Xcode 27 or later; Xcode MCP is only available in Xcode 27.
 - Require Xcode to be reachable through MCP. Most Xcode MCP tools require a workspace `tabIdentifier`; use `XcodeListWindows` when the active tab identifier is unknown.
-- Expect the user to approve MCP permission requests before Xcode actions run. If a request appears, pause for approval.
+- Expect Xcode to prompt for MCP access before Xcode actions run. If the prompt blocks a tool call, either wait for the user to click **Allow** or run the auto-approve script (see [Approving Xcode MCP Permission Dialogs](#approving-xcode-mcp-permission-dialogs)).
 - Treat Xcode's active scheme and run destination as mutable state. List them before changing them when the task depends on a specific target or simulator.
 - Use project-structure tools when Xcode navigator membership, generated project structure, or target/project configuration matters.
 
@@ -50,6 +50,29 @@ Only install or register the Xcode MCP server if it is missing entirely. After i
   ```bash
   xcrun mcpbridge
   ```
+
+## Approving Xcode MCP Permission Dialogs
+
+When an agent connects to Xcode MCP, Xcode shows a modal dialog titled like `"<agent> wants to access Xcode?"` with **Allow** / **Deny** buttons. Until it is dismissed with **Allow**, Xcode MCP tool calls stall or fail — the connection is blocked on that dialog.
+
+If an Xcode MCP tool call is blocked or failing on this access dialog, run the bundled auto-approve script to click **Allow** for any pending Xcode MCP dialogs:
+
+```bash
+osascript -l JavaScript scripts/approve-xcode-mcp-dialog.js
+```
+
+Run it from the skill directory, or pass the full path to the script if invoked from elsewhere. It prints one of:
+
+- `Allowed N MCP connection(s).` — approved one or more waiting dialogs; retry the blocked Xcode MCP tool call.
+- `No MCP dialogs found.` — nothing was waiting; the block is something else (Xcode not connected, wrong `tabIdentifier`, server not registered).
+- `Xcode not running.` — open Xcode with the target project first.
+
+Requirements:
+
+- Xcode must be running.
+- The process running the script (the agent's shell, Terminal, etc.) needs macOS Accessibility permission so it can drive System Events: System Settings > Privacy & Security > Accessibility. Without it, `osascript` cannot click the button; grant access and rerun.
+
+Use this only to clear the Xcode access dialog that is blocking a legitimate, user-requested Xcode action. Do not use it to suppress other confirmations.
 
 ## Workflow
 
@@ -180,7 +203,7 @@ These may depend on Apple account/project availability. Do not present unavailab
 
 - Do not invent unavailable Xcode MCP tools. Use only tools visible in the current session.
 - Do not assume Xcode is already open. Ask the user to open it when `tabIdentifier` cannot be obtained or Xcode MCP calls cannot connect.
-- Do not bypass permission approval prompts. MCP requests may need explicit user approval before Xcode actions run.
+- Clear the Xcode MCP access dialog only to unblock a legitimate, user-requested Xcode action — wait for the user to click **Allow** or run `scripts/approve-xcode-mcp-dialog.js`. Do not suppress or auto-dismiss other confirmation prompts.
 - When Xcode MCP output provides full list files, use targeted grep/search on those files for exact scheme, destination, or test names.
 
 ## References
