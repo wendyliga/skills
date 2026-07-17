@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Structure & Module Organization
 
-This repository packages reusable AI-tool skills. Root files hold repository-level documentation and install instructions. Skill packages live under `skills/<skill-name>/`; the current package is `skills/xcode/`.
+This repository packages reusable AI-tool skills. Root files hold repository-level documentation and install instructions. Skill packages live under `skills/<skill-name>/`; current packages include `skills/xcode/`, `skills/extract-xcode-skills/`, and `skills/swift-format/`.
 
 Each skill should include a `SKILL.md` entry point with YAML front matter, clear invocation guidance, workflows, boundaries, and references. Put supporting long-form material in `skills/<skill-name>/references/`. Agent integration metadata belongs in `skills/<skill-name>/agents/`, such as `agents/openai.yaml`.
 

@@ -20,6 +20,7 @@ Restart your AI coding tool after installation so new skills are loaded.
 | --- | --- | --- |
 | `xcode` | Guide for using Xcode MCP tools to inspect and drive Xcode workspaces, schemes, destinations, builds, tests, SwiftUI previews, runtime logs, debugger commands, device interaction, project configuration, Apple documentation, crash reports, and performance diagnostics. | `npx skills add wendyliga/skills --skill xcode` |
 | `extract-xcode-skills` | Extracts Xcode 27's built-in agentic chat skills (e.g. `swiftui-specialist`, `uikit-app-modernization`) out of Xcode.app and installs them as SKILL.md packages for external agents. | `npx skills add wendyliga/skills --skill extract-xcode-skills` |
+| `swift-format` | Guide for operating Apple's swift-format to format or lint Swift source — locating the tool, every CLI option and configuration key, and safe run recipes including a lint-after-changes workflow. | `npx skills add wendyliga/skills --skill swift-format` |
 
 ## List Skills
 
