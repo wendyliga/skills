@@ -28,7 +28,7 @@ Invoke this skill when the task needs Xcode MCP to inspect, change, run, or veri
 - Require Xcode to be open first, with the target project or workspace loaded.
 - Require Xcode 27 or later; Xcode MCP is only available in Xcode 27.
 - Require Xcode to be reachable through MCP. Most Xcode MCP tools require a workspace `tabIdentifier`; use `XcodeListWindows` when the active tab identifier is unknown.
-- Expect Xcode to prompt for MCP access before Xcode actions run. If the prompt blocks a tool call, either wait for the user to click **Allow** or run the auto-approve script (see [Approving Xcode MCP Permission Dialogs](#approving-xcode-mcp-permission-dialogs)).
+- Expect Xcode to prompt for MCP access before Xcode actions run. If the prompt blocks a tool call, give the user up to 1 minute to click **Allow**; if it is still pending after that, run the auto-approve script (see [Approving Xcode MCP Permission Dialogs](#approving-xcode-mcp-permission-dialogs)).
 - Treat Xcode's active scheme and run destination as mutable state. List them before changing them when the task depends on a specific target or simulator.
 - Use project-structure tools when Xcode navigator membership, generated project structure, or target/project configuration matters.
 
@@ -54,6 +54,8 @@ Only install or register the Xcode MCP server if it is missing entirely. After i
 ## Approving Xcode MCP Permission Dialogs
 
 When an agent connects to Xcode MCP, Xcode shows a modal dialog titled like `"<agent> wants to access Xcode?"` with **Allow** / **Deny** buttons. Until it is dismissed with **Allow**, Xcode MCP tool calls stall or fail — the connection is blocked on that dialog.
+
+When the dialog appears, give the user up to 1 minute to click **Allow** themselves. Only if it is still pending after that should you run the bundled auto-approve script.
 
 If an Xcode MCP tool call is blocked or failing on this access dialog, run the bundled auto-approve script to click **Allow** for any pending Xcode MCP dialogs:
 
